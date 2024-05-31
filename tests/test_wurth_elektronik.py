@@ -30,6 +30,19 @@ class TestTMEBarcodeDecoder(unittest.TestCase):
         self.assertEqual(decoded['Date_Code'], '20110207')
         self.assertEqual(decoded['manufacturer'], {'name': 'Wurth Elektronik'})
 
+    def test_pdf_string_2_decode(self):
+        str1 = ('[)>^06]1P744228S]Q12]1T226118011136000]16D20110909^d')
+        decoded = decode_wurth_elektronik(CodeType.PDF417, str1.upper())
+        self.assertEqual(decoded['order_number']['number'], None)
+        self.assertEqual(decoded['order_number']['position'], None)
+        self.assertEqual(decoded['invoice'], None)
+        self.assertEqual(decoded['distributor_order_number']['text'], '744228S')
+        self.assertEqual(decoded['manufacturer_order_number'], '744228S')
+        self.assertEqual(decoded['quantity'], 12)
+        self.assertEqual(decoded['LOT'], '226118011136000')
+        self.assertEqual(decoded['Date_Code'], '20110909')
+        self.assertEqual(decoded['manufacturer'], {'name': 'Wurth Elektronik'})
+
 
 if __name__ == '__main__':
     unittest.main()

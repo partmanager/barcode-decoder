@@ -10,7 +10,7 @@ def decode_wurth_elektronik(code_type: CodeType, barcode: str):
 
 
 def decode_datamatrix(barcode):
-    we_regexpr = r"\[\)>\^06](1P\d*])(Q\d*])(1T\d*])(16D\d*)\^D"
+    we_regexpr = r"\[\)>\^06](1P\d*[A-Z]?])(Q\d*])(1T\d*])(16D\d*)\^D"
     we_regexpr_compiled = re.compile(we_regexpr)
     matched = we_regexpr_compiled.match(barcode)
     if matched:
