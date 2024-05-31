@@ -1,5 +1,6 @@
 import re
 from .scanner import CodeType
+from .result import Result
 
 
 def decode_wurth_elektronik(code_type: CodeType, barcode: str):
@@ -14,15 +15,15 @@ def decode_datamatrix(barcode):
     we_regexpr_compiled = re.compile(we_regexpr)
     matched = we_regexpr_compiled.match(barcode)
     if matched:
-        manufacturer_order_number = matched.group(1).lstrip('1P').rstrip(']')
-        quantity = int(matched.group(2).lstrip('Q').rstrip(']'))
-        result = {'distributor': {'name': 'Wurth Elektronik'},
-                  'order_number': {'number': None, 'position': None},
-                  'invoice': None,
-                  'manufacturer_order_number': manufacturer_order_number,
-                  'distributor_order_number': {'text': manufacturer_order_number, 'don': None},
-                  'quantity': quantity,
-                  'LOT': matched.group(3).lstrip('1T').rstrip(']'),
-                  'Date_Code': matched.group(4).lstrip('16D'),
-                  'manufacturer': {'name': 'Wurth Elektronik'}}
+        manufacturer_order_number = matched.group(1).removeprefix('1P').rstrip(']')
+        quantity = int(matched.group(2).removeprefix('Q').rstrip(']'))
+
+        result = Result(distributor='Wurth Elektronik',
+                        order_number={'number': None, 'position': None},
+                        mon=manufacturer_order_number,
+                        don=manufacturer_order_number,
+                        quantity=quantity,
+                        LOT=matched.group(3).lstrip('1T').rstrip(']'),
+                        date_code=matched.group(4).lstrip('16D'),
+                        manufacturer='Wurth Elektronik')
         return result

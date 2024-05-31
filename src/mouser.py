@@ -1,5 +1,6 @@
 import re
 from .scanner import CodeType
+from .result import Result
 
 
 def decode_mouser_barcode(code_type: CodeType, barcode):
@@ -8,13 +9,13 @@ def decode_mouser_barcode(code_type: CodeType, barcode):
         mouser_regexpr_compiled = re.compile(mouser_regexpr)
         matched = mouser_regexpr_compiled.match(barcode)
         if matched:
-            result = {'distributor': {'name': 'Mouser'},
-                      'order_number': {'number': matched.group(2), 'position': None},
-                      'invoice': {'position': int(matched.group(3)), 'number': matched.group(6)},
-                      'manufacturer_order_number': matched.group(4),
-                      'distributor_order_number': {},
-                      'quantity': float(matched.group(5)),
-                      'manufacturer': {'name': matched.group(8)}}
+            result = Result(distributor='Mouser',
+                            order_number={'number': matched.group(2), 'position': None},
+                            mon=matched.group(4),
+                            don=None,
+                            quantity=float(matched.group(5)),
+                            invoice={'position': int(matched.group(3)), 'number': matched.group(6)},
+                            LOT=matched.group(3).lstrip('1T').rstrip(']'),
+                            date_code=None,
+                            manufacturer=matched.group(8))
             return result
-
-
