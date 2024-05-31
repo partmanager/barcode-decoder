@@ -20,7 +20,9 @@ def decode_datamatrix(barcode: str):
                   'manufacturer_order_number': matched.group(2),
                   'distributor_order_number': {'text': matched.group(1), 'don': None},
                   'quantity': matched.group(3),
-                  'manufacturer': {}}
+                  'LOT': None,
+                  'Date_Code': None,
+                  'manufacturer': {'name': None}}
         return result
 
 
@@ -33,6 +35,8 @@ def decode_qr(barcode: str):
               'manufacturer_order_number': None,
               'distributor_order_number': {'text': None, 'don': None},
               'quantity': None,
+              'LOT': None,
+              'Date_Code': None,
               'manufacturer': {}}
     for line in lines:
         if line.startswith('QTY:'):
