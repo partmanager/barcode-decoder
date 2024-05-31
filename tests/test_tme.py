@@ -1,11 +1,12 @@
 import unittest
 from src.tme import decode_tme_barcode
+from src.scanner import CodeType
 
 
 class TestTMEBarcodeDecoder(unittest.TestCase):
     def test_string_decode(self):
         str1 = 'PDG301-5.0-2P12 1PDG301-5.0-02P-12-00A(H) Q20 K17513107/11'
-        decoded = decode_tme_barcode(str1)
+        decoded = decode_tme_barcode(CodeType.DataMatrix, str1)
         self.assertEqual(decoded['order_number']['number'], '17513107')
         self.assertEqual(decoded['order_number']['position'], '11')
         self.assertEqual(decoded['invoice'], None)
@@ -16,7 +17,7 @@ class TestTMEBarcodeDecoder(unittest.TestCase):
 
     def test_string2_decode(self):
         str1 = 'PLP38501TS-ADJ/NOPB 1PLP38501TS-ADJ/NOPB Q4 K16537641/3'
-        decoded = decode_tme_barcode(str1)
+        decoded = decode_tme_barcode(CodeType.DataMatrix, str1)
         self.assertEqual(decoded['order_number']['number'], '16537641')
         self.assertEqual(decoded['order_number']['position'], '3')
         self.assertEqual(decoded['invoice'], None)
@@ -27,7 +28,7 @@ class TestTMEBarcodeDecoder(unittest.TestCase):
 
     def test_string3_decode(self):
         str1 = 'PSMAJ15A-13-F 1PSMAJ15A-13-F Q25 4LTW K18098201/1'
-        decoded = decode_tme_barcode(str1)
+        decoded = decode_tme_barcode(CodeType.DataMatrix, str1)
         self.assertEqual(decoded['order_number']['number'], '18098201')
         self.assertEqual(decoded['order_number']['position'], '1')
         self.assertEqual(decoded['invoice'], None)
@@ -38,7 +39,7 @@ class TestTMEBarcodeDecoder(unittest.TestCase):
 
     def test_string4_decode(self):
         str1 = 'PSMD0402-220K-1% 1P0402WGF2203TCE Q200 K18417297/21'
-        decoded = decode_tme_barcode(str1)
+        decoded = decode_tme_barcode(CodeType.DataMatrix, str1)
         self.assertEqual(decoded['order_number']['number'], '18417297')
         self.assertEqual(decoded['order_number']['position'], '21')
         self.assertEqual(decoded['invoice'], None)
@@ -49,7 +50,7 @@ class TestTMEBarcodeDecoder(unittest.TestCase):
 
     def test_string5_decode(self):
         str1 = 'P74HC595PW.118 1P74HC595PW,118 Q25 K18416227/6'
-        decoded = decode_tme_barcode(str1)
+        decoded = decode_tme_barcode(CodeType.DataMatrix, str1)
         self.assertEqual(decoded['order_number']['number'], '18416227')
         self.assertEqual(decoded['order_number']['position'], '6')
         self.assertEqual(decoded['invoice'], None)
@@ -57,6 +58,17 @@ class TestTMEBarcodeDecoder(unittest.TestCase):
         self.assertEqual(decoded['manufacturer_order_number'], '74HC595PW,118')
         self.assertEqual(decoded['quantity'], '25')
         self.assertEqual(decoded['manufacturer'], {})
+
+    def test_qr_string1_decode(self):
+        qr_str = ('QTY:5 PN:LAN8720A-CP PO:30635449/3 MFR:MICROCHIPTECHNOLOGY MPN:LAN8720A-CP RoHS https://www.tme.eu/details/LAN8720A-CP')
+        decoded = decode_tme_barcode(CodeType.QR, qr_str)
+        self.assertEqual(decoded['order_number']['number'], '30635449')
+        self.assertEqual(decoded['order_number']['position'], '3')
+        self.assertEqual(decoded['invoice'], None)
+        self.assertEqual(decoded['distributor_order_number']['text'], 'LAN8720A-CP')
+        self.assertEqual(decoded['manufacturer_order_number'], 'LAN8720A-CP')
+        self.assertEqual(decoded['quantity'], 5)
+        self.assertEqual(decoded['manufacturer']['name'], 'MICROCHIPTECHNOLOGY')
 
 
 if __name__ == '__main__':

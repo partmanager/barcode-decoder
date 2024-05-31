@@ -1,13 +1,11 @@
 import re
+from .scanner import CodeType
 
 
-def decode_wurth_elektronik(barcode: str):
-    barcode = barcode.upper()
-    if barcode.startswith(']L0'):
-        barcode = barcode.lstrip(']L0')
+def decode_wurth_elektronik(code_type: CodeType, barcode: str):
+    if code_type == CodeType.DataMatrix:
         return decode_datamatrix(barcode)
-    elif barcode.startswith(']D1'):
-        barcode = barcode.lstrip(']D1')
+    elif code_type == CodeType.PDF417:
         return decode_datamatrix(barcode)
 
 
