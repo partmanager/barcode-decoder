@@ -3,7 +3,7 @@ from src.wurth_elektronik import decode_wurth_elektronik
 from src.scanner import CodeType
 
 
-class TestTMEBarcodeDecoder(unittest.TestCase):
+class TestWurthElektronikBarcodeDecoder(unittest.TestCase):
     def test_string_decode(self):
         str1 = '[)>^06]1P744912168]Q5]1T329012581410000]16D20140307^d'
         decoded = decode_wurth_elektronik(CodeType.DataMatrix, str1.upper())
