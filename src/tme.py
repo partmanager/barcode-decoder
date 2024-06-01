@@ -5,7 +5,10 @@ from .result import Result
 
 def decode_tme_barcode(code_type: CodeType, barcode: str):
     if code_type == CodeType.DataMatrix:
-        return decode_datamatrix(barcode)
+        if barcode.find(' ') != -1:
+            return decode_datamatrix(barcode)
+        else:
+            return decode_hard_datamatrix(barcode)
     elif code_type == CodeType.QR:
         return decode_qr(barcode)
 
@@ -20,6 +23,20 @@ def decode_datamatrix(barcode: str):
                         don=matched.group(1),
                         order_number={'number': matched.group(4), 'position': matched.group(5)},
                         quantity=float(matched.group(3)))
+        return result
+
+
+def decode_hard_datamatrix(barcode: str):
+    tme_regexpr = r"(P[\w\.\-\/%]*)(1P[\w\.\-\\/)\(,]*)(Q\d*)(?:4L\w* )?(K\d*/\d*)"
+    tme_regexpr_compiled = re.compile(tme_regexpr)
+    matched = tme_regexpr_compiled.match(barcode)
+    if matched:
+        order_number, order_number_position = matched.group(4).removeprefix('K').split('/')
+        result = Result(distributor="TME",
+                        mon=matched.group(2).removeprefix('1P'),
+                        don=matched.group(1).removeprefix('P'),
+                        order_number={'number': order_number, 'position': order_number_position},
+                        quantity=float(matched.group(3).removeprefix('Q')))
         return result
 
 

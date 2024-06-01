@@ -59,6 +59,17 @@ class TestTMEBarcodeDecoder(unittest.TestCase):
         self.assertEqual(decoded.quantity, 25)
         self.assertEqual(decoded.manufacturer, None)
 
+    def test_datamatrix_string_no_spaces_decode(self):
+        str1 = ('PLAN8720A-CP1PLAN8720A-CPQ5K20835594/3')
+        decoded = decode_tme_barcode(CodeType.DataMatrix, str1)
+        self.assertEqual(decoded.order_number['number'], '20835594')
+        self.assertEqual(decoded.order_number['position'], '3')
+        self.assertEqual(decoded.invoice, None)
+        self.assertEqual(decoded.don, 'LAN8720A-CP')
+        self.assertEqual(decoded.mon, 'LAN8720A-CP')
+        self.assertEqual(decoded.quantity, 5)
+        self.assertEqual(decoded.manufacturer, None)
+
     def test_qr_string1_decode(self):
         qr_str = ('QTY:5 PN:LAN8720A-CP PO:30635449/3 MFR:MICROCHIPTECHNOLOGY MPN:LAN8720A-CP RoHS https://www.tme.eu/details/LAN8720A-CP')
         decoded = decode_tme_barcode(CodeType.QR, qr_str)
