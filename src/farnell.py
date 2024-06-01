@@ -20,8 +20,10 @@ def decode_datamatrix(barcode):
             result.don = param.removeprefix('3P')
         elif param.startswith('Q'):
             result.quantity = float(param.removeprefix('Q'))
-        elif param.startswith('16D'):
-            result.date_code = param.removeprefix('16D')
+        elif param.startswith('9D') and len(param) > 2:
+            result.date_code = param.removeprefix('9D')
+        elif param.startswith('1T') and len(param) > 2:
+            result.LOT = param.removeprefix('1T')
         elif param.startswith('4L'):
             result.coo = param.removeprefix('4L')
         elif param.startswith('4K'):
