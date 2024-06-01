@@ -21,16 +21,13 @@ class TestDigiKeyBarcodeDecoder(unittest.TestCase):
         str1 = '[)>^06]j88EFC224.BD844ABB.8A542FF7.7F3C82260D83]P455-2290-ND]1P03ZR-8M-P]9D2017.11]14Z171101]1T278565]4LCN]11ZPREPACK]15Z1.0.1]12Z1678834]q50]13Z0]20Z000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000'
         decoded = decode_digi_key_barcode(CodeType.DataMatrix, str1.upper())
         self.assertEqual(decoded.distributor, "DigiKey")
-        self.assertEqual(decoded.order_number['number'], 'PO22000140')
         self.assertEqual(decoded.invoice, None)
-        self.assertEqual(decoded.don, 'SAM14954CT-ND')
-        self.assertEqual(decoded.mon, 'LSHM-110-01-L-DH-A-S-K-TR')
-        self.assertEqual(decoded.quantity, 3)
-        self.assertEqual(decoded.LOT, None)
-        self.assertEqual(decoded.date_code, None)
+        self.assertEqual(decoded.don, '455-2290-ND')
+        self.assertEqual(decoded.mon, '03ZR-8M-P')
+        self.assertEqual(decoded.quantity, 50)
+        self.assertEqual(decoded.LOT, '278565')
+        self.assertEqual(decoded.date_code, '2017.11')
         self.assertEqual(decoded.manufacturer, None)
-
-
 
 
 if __name__ == '__main__':
