@@ -34,8 +34,7 @@ def decode_qr(barcode: str):
             result.don = line.removeprefix('PN:')
         elif line.startswith('PO:'):
             order_number, position = line.removeprefix('PO:').split('/')
-            result.order_number['number'] = order_number
-            result.order_number['position'] = position
+            result.order_number = {'number': order_number, 'position': position}
         elif line.startswith('MFR'):
             result.manufacturer = line.removeprefix('MFR:')
         elif line.startswith('MPN:'):

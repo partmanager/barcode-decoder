@@ -7,12 +7,9 @@ class Result:
                  quantity: float or None = None,
                  invoice: dict or None = None,
                  order_number: dict or None = None,
+                 coo: str or None = None,
                  LOT: str or None = None,
                  date_code: str or None = None, ):
-        if order_number is None:
-            order_number = {}
-        if invoice is None:
-            invoice = {}
         self.distributor = distributor
         self.manufacturer = manufacturer
         self.mon = mon
@@ -20,6 +17,7 @@ class Result:
         self.quantity = quantity
         self.order_number = order_number
         self.invoice = invoice
+        self.coo = coo
         self.LOT = LOT
         self.date_code = date_code
 
@@ -32,8 +30,11 @@ class Result:
 
         if self.invoice:
             result_str += f"Invoice: {self.invoice['number']}, position: {self.invoice['position']}\n"
+        if self.order_number:
+            result_str += f"Order Number: {self.order_number['number']}, position: {self.order_number['position']}\n"
 
         result_str += f"LOT: {self.LOT}\n" \
-                      f"Date Code: {self.date_code}\n"
+                      f"Date Code: {self.date_code}\n" \
+                      f"Country of origin: {self.coo}"
 
         return result_str
