@@ -18,12 +18,18 @@ def decode_datamatrix(barcode):
         manufacturer_order_number = matched.group(1).removeprefix('1P').rstrip(']')
         quantity = int(matched.group(2).removeprefix('Q').rstrip(']'))
 
+        lot = matched.group(3).lstrip('1T').rstrip(']')
+        if lot == "000000000000000":
+            lot = None
+        date_code = matched.group(4).removeprefix('16D')
+        if date_code == "00010101":
+            date_code = None
         result = Result(distributor='Wurth Elektronik',
                         order_number={'number': None, 'position': None},
                         mon=manufacturer_order_number,
                         don=manufacturer_order_number,
                         quantity=quantity,
-                        LOT=matched.group(3).lstrip('1T').rstrip(']'),
-                        date_code=matched.group(4).lstrip('16D'),
+                        LOT=lot,
+                        date_code=date_code,
                         manufacturer='Wurth Elektronik')
         return result if result.is_valid() else None
