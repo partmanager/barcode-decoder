@@ -35,7 +35,7 @@ class Result:
                      f"Quantity: {self.quantity}\n"
 
         if self.invoice:
-            result_str += f"Invoice: {self.invoice['number']}, position: {self.invoice['position']}\n"
+            result_str += f"Invoice: {self.invoice['number']}, position: {self.invoice['position'] if 'position' in self.invoice else None}\n"
         if self.order_number:
             result_str += f"Order Number: {self.order_number['number']}, position: {self.order_number['position'] if 'position' in self.order_number else None}\n"
 
