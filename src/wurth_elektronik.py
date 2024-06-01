@@ -26,4 +26,4 @@ def decode_datamatrix(barcode):
                         LOT=matched.group(3).lstrip('1T').rstrip(']'),
                         date_code=matched.group(4).lstrip('16D'),
                         manufacturer='Wurth Elektronik')
-        return result
+        return result if result.is_valid() else None

@@ -26,4 +26,4 @@ def decode_datamatrix(barcode):
             result.coo = param.removeprefix('4L')
         elif param.startswith('4K'):
             result.order_number["position"] = param.removeprefix('4K')
-    return result
+    return result if result.is_valid() else None

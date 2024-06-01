@@ -23,7 +23,7 @@ def decode_datamatrix(barcode: str):
                         don=matched.group(1),
                         order_number={'number': matched.group(4), 'position': matched.group(5)},
                         quantity=float(matched.group(3)))
-        return result
+        return result if result.is_valid() else None
 
 
 def decode_hard_datamatrix(barcode: str):
@@ -37,7 +37,7 @@ def decode_hard_datamatrix(barcode: str):
                         don=matched.group(1).removeprefix('P'),
                         order_number={'number': order_number, 'position': order_number_position},
                         quantity=float(matched.group(3).removeprefix('Q')))
-        return result
+        return result if result.is_valid() else None
 
 
 def decode_qr(barcode: str):
@@ -56,4 +56,4 @@ def decode_qr(barcode: str):
             result.manufacturer = line.removeprefix('MFR:')
         elif line.startswith('MPN:'):
             result.mon = line.removeprefix('MPN:')
-    return result
+    return result if result.is_valid() else None

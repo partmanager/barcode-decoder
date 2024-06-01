@@ -18,4 +18,4 @@ def decode_mouser_barcode(code_type: CodeType, barcode):
                             LOT=matched.group(3).lstrip('1T').rstrip(']'),
                             date_code=None,
                             manufacturer=matched.group(8))
-            return result
+            return result if result.is_valid() else None
