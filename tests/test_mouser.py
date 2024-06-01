@@ -1,6 +1,6 @@
 import unittest
-from src.mouser import decode_mouser_barcode
-from src.scanner import CodeType
+from src.barcode_decoder.mouser import (decode_mouser_barcode)
+from src.barcode_decoder.scanner import CodeType
 
 
 class TestMouserBarcodeDecoder(unittest.TestCase):

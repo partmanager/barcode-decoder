@@ -1,6 +1,6 @@
 import unittest
-from src.digi_key import decode_digi_key_barcode
-from src.scanner import CodeType
+from src.barcode_decoder.digi_key import decode_digi_key_barcode
+from src.barcode_decoder.scanner import CodeType
 
 
 class TestDigiKeyBarcodeDecoder(unittest.TestCase):

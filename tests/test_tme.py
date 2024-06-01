@@ -1,6 +1,6 @@
 import unittest
-from src.tme import decode_tme_barcode
-from src.scanner import CodeType
+from src.barcode_decoder.tme import decode_tme_barcode
+from src.barcode_decoder.scanner import CodeType
 
 
 class TestTMEBarcodeDecoder(unittest.TestCase):

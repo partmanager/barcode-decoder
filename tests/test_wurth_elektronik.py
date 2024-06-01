@@ -1,6 +1,6 @@
 import unittest
-from src.wurth_elektronik import decode_wurth_elektronik
-from src.scanner import CodeType
+from src.barcode_decoder.wurth_elektronik import decode_wurth_elektronik
+from src.barcode_decoder.scanner import CodeType
 
 
 class TestWurthElektronikBarcodeDecoder(unittest.TestCase):

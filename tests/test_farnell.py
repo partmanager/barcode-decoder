@@ -1,6 +1,6 @@
 import unittest
-from src.farnell import decode_farnell_barcode
-from src.scanner import CodeType
+from src.barcode_decoder.farnell import decode_farnell_barcode
+from src.barcode_decoder.scanner import CodeType
 
 
 class TestFarnellBarcodeDecoder(unittest.TestCase):
