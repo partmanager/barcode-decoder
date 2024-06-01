@@ -6,7 +6,11 @@ from .wurth_elektronik import decode_wurth_elektronik
 from .scanner import detect_code_type
 
 
-decoders = [decode_digi_key_barcode, decode_farnell_barcode, decode_mouser_barcode, decode_tme_barcode, decode_wurth_elektronik]
+decoders = [decode_digi_key_barcode,
+            decode_farnell_barcode,
+            decode_mouser_barcode,
+            decode_tme_barcode,
+            decode_wurth_elektronik]
 
 
 def decode_barcode(barcode: str):
@@ -31,7 +35,7 @@ def pretty_print(decoded_barcode):
 if __name__ == '__main__':
     print("Barcode Decoder, press Enter to exit")
     while True:
-        barcode = input("Barecode? ")
+        barcode = input("Barcode? ")
         if len(barcode) <= 1:
             break
         results = decode_barcode(barcode)
